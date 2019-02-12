@@ -43,6 +43,7 @@ int main(int argc, char const *argv[])
 		std::cout << elmentsVec[i].getView() << std::endl;
 		std::cout << elmentsVec[i].getStartRatio(width)<<std::endl;
 		std::cout << elmentsVec[i].getEndRatio(width)<<std::endl;
+		std::cout << elmentsVec[i].getTopRatio(height)<<std::endl;
 	}
 
 	return 0;

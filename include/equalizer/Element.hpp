@@ -24,7 +24,7 @@ public:
     
     int getStartRatio(const int maxWidth)const;
     int getEndRatio(const int maxWidth)const;
-    // int getTopRatio(const int maxHeight)const;
+    int getTopRatio(const int maxHeight)const;
     // int getBottomRatio(const int maxHeight)const;
 
     std::string getView();
