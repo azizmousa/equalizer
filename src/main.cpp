@@ -12,6 +12,10 @@ int main(int argc, char const *argv[])
 
 	std::fstream input("objects.obj");
 	std::vector<Element> elmentsVec;
+	int width, height;
+	
+	input >> width;
+	height >> height;
 
 	std::string view, temp;
 	int left, top, right, bottom;
