@@ -58,6 +58,11 @@ int Element::getBottom(){
     return this->bottom;
 }
 
+int Element::getStartRatio(const int maxWidth)const{
+    double rat = this->left / (double) maxWidth;
+    return rat * 100;
+}
+
 std::string Element::getView(){
     return this->view;
 }

@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
 	int width, height;
 	
 	input >> width;
-	height >> height;
+	input >> height;
 
 	std::string view, temp;
 	int left, top, right, bottom;
@@ -41,6 +41,7 @@ int main(int argc, char const *argv[])
 
 	for(int i =0; i<elmentsVec.size();++i){
 		std::cout << elmentsVec[i].getView() << std::endl;
+		std::cout << elmentsVec[i].getStartRatio(width)<<std::endl;
 	}
 
 	return 0;
