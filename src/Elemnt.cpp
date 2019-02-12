@@ -10,15 +10,24 @@ Element::Element(){
     this->bottom = 0;
 }
 
-Element::Element(int left, int top, int right, int bottom){
+Element::Element(std::string view, int left, int top, int right, int bottom){
+    this->view = view;
     this->left = left;
     this->top = top;
     this->right = right;
     this->bottom = bottom;
 }
 
+bool operator<(const Element &e1, const Element &e2){
+    return (e1.top < e2.top) ?true:false;
+}
+
 void Element::setLeft(int left){
     this->left = left;
+}
+
+void Element::setView(std::string view){
+    this->view = view;
 }
 
 void Element::setTop(int top){
@@ -49,8 +58,12 @@ int Element::getBottom(){
     return this->bottom;
 }
 
+std::string Element::getView(){
+    return this->view;
+}
+
 std::string Element::toString(){
-    return "left: " + std::to_string(this->left) + "\ntop: "
+    return this->view + "\nleft: " + std::to_string(this->left) + "\ntop: "
             + std::to_string(this->top) + "\nright: " + std::to_string(this->right) 
             + "\nbottom: " + std::to_string(this->bottom);
 }
