@@ -44,6 +44,7 @@ int main(int argc, char const *argv[])
 		std::cout << elmentsVec[i].getStartRatio(width)<<std::endl;
 		std::cout << elmentsVec[i].getEndRatio(width)<<std::endl;
 		std::cout << elmentsVec[i].getTopRatio(height)<<std::endl;
+		std::cout << elmentsVec[i].getBottomRatio(height)<<std::endl;
 	}
 
 	return 0;

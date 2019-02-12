@@ -73,6 +73,10 @@ int Element::getTopRatio(const int maxHeight)const{
     return rat * 100;
 }
 
+int Element::getBottomRatio(const int maxHeight)const{
+    double rat = this->bottom / (double) maxHeight;
+    return rat * 100;
+}
 
 std::string Element::getView(){
     return this->view;
