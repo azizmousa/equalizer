@@ -63,6 +63,11 @@ int Element::getStartRatio(const int maxWidth)const{
     return rat * 100;
 }
 
+int Element::getEndRatio(const int maxWidth)const{
+    double rat = this->right / (double) maxWidth;
+    return rat * 100;
+}
+
 std::string Element::getView(){
     return this->view;
 }
