@@ -5,22 +5,22 @@
 
 class Element{
 private:
-    int left, top, right, bottom;
+    int leftRatio, topRatio, widthRatio, heightRatio;
     std::string view;
 public:
     Element();
-    Element(std::string view, int left, int top, int right, int bottom);
+    Element(std::string view, int leftRatio, int topRatio, int widthRatio, int heightRatio);
     void setLeft(int left);
     void setTop(int top);
-    void setRight(int right);
-    void setBottom(int bottom);
+    void setWidth(int width);
+    void setHeight(int height);
     void setView(std::string view);
     friend bool operator<(const Element &e1, const Element &e2);
 
     int getLeft();
     int getTop();
-    int getRight();
-    int getBottom();
+    int getWidth();
+    int getHeight();
 
     std::string getView();
     std::string toString();
