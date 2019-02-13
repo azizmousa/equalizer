@@ -32,20 +32,20 @@ int main(int argc, char const *argv[])
 		input >> bottom;
 		input >> temp;
 		Element e(view, left, top, right, bottom);
-		std::cout<<e.toString()<<std::endl<<std::endl;
+//		std::cout<<e.toString()<<std::endl<<std::endl;
 		elmentsVec.push_back(e);
 	}
 	input.close();
 	
-	std::sort(elmentsVec.begin(), elmentsVec.end());
+	//std::sort(elmentsVec.begin(), elmentsVec.end());
 
-	for(int i =0; i<elmentsVec.size();++i){
-		std::cout << elmentsVec[i].getView() << std::endl;
-		std::cout << elmentsVec[i].getStartRatio(width)<<std::endl;
-		std::cout << elmentsVec[i].getEndRatio(width)<<std::endl;
-		std::cout << elmentsVec[i].getTopRatio(height)<<std::endl;
-		std::cout << elmentsVec[i].getBottomRatio(height)<<std::endl;
-	}
+	// for(int i =0; i<elmentsVec.size();++i){
+	// 	std::cout << elmentsVec[i].getView() << std::endl;
+	// 	std::cout << elmentsVec[i].getStartRatio(width)<<std::endl;
+	// 	std::cout << elmentsVec[i].getEndRatio(width)<<std::endl;
+	// 	std::cout << elmentsVec[i].getTopRatio(height)<<std::endl;
+	// 	std::cout << elmentsVec[i].getBottomRatio(height)<<std::endl;
+	// }
 
 	return 0;
 }

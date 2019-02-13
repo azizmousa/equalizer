@@ -78,6 +78,10 @@ int Element::getBottomRatio(const int maxHeight)const{
     return rat * 100;
 }
 
+bool Element::compareTopRatio(Element &e1, Element &e2){
+    return e1.getTopRatio() < e2.getTopRatio();
+}
+
 std::string Element::getView(){
     return this->view;
 }
