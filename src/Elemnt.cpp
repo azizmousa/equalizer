@@ -59,7 +59,7 @@ std::string Element::getView(){
 }
 
 std::string Element::toString(){
-    return this->view + "\nleft: " + std::to_string(this->left) + "\ntop: "
-            + std::to_string(this->top) + "\nright: " + std::to_string(this->right) 
-            + "\nbottom: " + std::to_string(this->bottom);
+    return this->view + "\nleft: " + std::to_string(this->leftRatio) + "\ntop: "
+            + std::to_string(this->topRatio) + "\nright: " + std::to_string(this->widthRatio) 
+            + "\nbottom: " + std::to_string(this->heightRatio);
 }

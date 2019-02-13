@@ -15,7 +15,6 @@ public:
     void setWidth(int width);
     void setHeight(int height);
     void setView(std::string view);
-    friend bool operator<(const Element &e1, const Element &e2);
 
     int getLeft();
     int getTop();
