@@ -7,6 +7,8 @@
 #include<equalizer/Element.hpp>
 
 
+int getPercent(int sub, int max);
+
 int main(int argc, char const *argv[])
 {
 
@@ -31,21 +33,54 @@ int main(int argc, char const *argv[])
 		input >> right;
 		input >> bottom;
 		input >> temp;
-		Element e(view, left, top, right, bottom);
-//		std::cout<<e.toString()<<std::endl<<std::endl;
+		Element e(view, getPercent(left, width), getPercent(top, height), 
+		getPercent(right - left, width), getPercent(bottom - top, height));
+
+		std::cout<<e.toString()<<std::endl<<std::endl;
 		elmentsVec.push_back(e);
 	}
 	input.close();
 	
+
 	//std::sort(elmentsVec.begin(), elmentsVec.end());
 
 	// for(int i =0; i<elmentsVec.size();++i){
 	// 	std::cout << elmentsVec[i].getView() << std::endl;
-	// 	std::cout << elmentsVec[i].getStartRatio(width)<<std::endl;
-	// 	std::cout << elmentsVec[i].getEndRatio(width)<<std::endl;
-	// 	std::cout << elmentsVec[i].getTopRatio(height)<<std::endl;
-	// 	std::cout << elmentsVec[i].getBottomRatio(height)<<std::endl;
+	// 	std::cout << elmentsVec[i].getLeft() << std::endl;
+	// 	std::cout << elmentsVec[i].getTop() << std::endl;
+	// 	std::cout << elmentsVec[i].getWidth() << std::endl;
+	// 	std::cout << elmentsVec[i].getHeight() << std::endl;
 	// }
+
+	std::vector<std::vector<Element>> matrix;
+
+	for(int i =0; i<elmentsVec.size();++i){
+		std::sort(elmentsVec.begin(), elmentsVec.end(), Element::compareTop);
+		std::vector<Element> row;
+		int initTopVal = elmentsVec[0].getTop();
+		int j;
+		for(j =0; ( elmentsVec[j].getTop() - initTopVal <= 5) && j < elmentsVec.size();++j){
+			row.push_back(elmentsVec[j]);
+		}
+		elmentsVec.erase(elmentsVec.begin(), elmentsVec.begin()+j);
+		std::sort(row.begin(), row.end(), Element::compareLeft);
+		matrix.push_back(row);
+		i = 0;
+	}
+	
+	for(int i =0; i<matrix.size();++i){	
+		for(int j =0; j<matrix[i].size();++j){
+			std::cout << matrix[i][j].getView() << " ";
+		}
+		std::cout<<std::endl;
+	}
 
 	return 0;
 }
+
+
+int getPercent(int sub, int max){
+	double rat = sub / (double) max;
+	return (rat * 100);
+}
+

@@ -4,26 +4,22 @@
 
 
 Element::Element(){
-    this->left = 0;
-    this->top = 0;
-    this->right = 0;
-    this->bottom = 0;
+    this->leftRatio = 0;
+    this->topRatio = 0;
+    this->widthRatio = 0;
+    this->heightRatio = 0;
 }
 
 Element::Element(std::string view, int left, int top, int right, int bottom){
     this->view = view;
-    this->left = left;
-    this->top = top;
-    this->right = right;
-    this->bottom = bottom;
-}
-
-bool operator<(const Element &e1, const Element &e2){
-    return (e1.top < e2.top) ?true:false;
+    this->leftRatio = left;
+    this->topRatio = top;
+    this->widthRatio = right;
+    this->heightRatio = bottom;
 }
 
 void Element::setLeft(int left){
-    this->left = left;
+    this->leftRatio = left;
 }
 
 void Element::setView(std::string view){
@@ -31,63 +27,46 @@ void Element::setView(std::string view){
 }
 
 void Element::setTop(int top){
-    this->top = top;
+    this->topRatio = top;
 }
 
-void Element::setRight(int right){
-    this->right = right;
+void Element::setWidth(int widthRatio){
+    this->widthRatio = widthRatio;
 }
 
-void Element::setBottom(int bottom){
-    this->bottom = bottom;
+void Element::setHeight(int heightRatio){
+    this->heightRatio = heightRatio;
 }
 
 int Element::getLeft(){
-    return this->left;
+    return this->leftRatio;
 }
 
 int Element::getTop(){
-    return this->top;
+    return this->topRatio;
 }
 
-int Element::getRight(){
-    return this->right;
+int Element::getWidth(){
+    return this->widthRatio;
 }
 
-int Element::getBottom(){
-    return this->bottom;
+int Element::getHeight(){
+    return this->heightRatio;
 }
 
-int Element::getStartRatio(const int maxWidth)const{
-    double rat = this->left / (double) maxWidth;
-    return rat * 100;
+bool Element::compareTop(Element &e1, Element &e2){
+    return e1.getTop() < e2.getTop();
 }
 
-int Element::getEndRatio(const int maxWidth)const{
-    double rat = this->right / (double) maxWidth;
-    return rat * 100;
+bool Element::compareLeft(Element &e1, Element &e2){
+    return e1.getLeft() < e2.getLeft();
 }
-
-int Element::getTopRatio(const int maxHeight)const{
-    double rat = this->top / (double) maxHeight;
-    return rat * 100;
-}
-
-int Element::getBottomRatio(const int maxHeight)const{
-    double rat = this->bottom / (double) maxHeight;
-    return rat * 100;
-}
-
-bool Element::compareTopRatio(Element &e1, Element &e2){
-    return e1.getTopRatio() < e2.getTopRatio();
-}
-
 std::string Element::getView(){
     return this->view;
 }
 
 std::string Element::toString(){
-    return this->view + "\nleft: " + std::to_string(this->left) + "\ntop: "
-            + std::to_string(this->top) + "\nright: " + std::to_string(this->right) 
-            + "\nbottom: " + std::to_string(this->bottom);
+    return this->view + "\nleft: " + std::to_string(this->leftRatio) + "\ntop: "
+            + std::to_string(this->topRatio) + "\nright: " + std::to_string(this->widthRatio) 
+            + "\nbottom: " + std::to_string(this->heightRatio);
 }
