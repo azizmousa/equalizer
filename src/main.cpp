@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
 	int width, height;
 	
 	input >> width;
-	height >> height;
+	input >> height;
 
 	std::string view, temp;
 	int left, top, right, bottom;
