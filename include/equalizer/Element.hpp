@@ -21,6 +21,8 @@ public:
     int getWidth();
     int getHeight();
 
+    static bool compareTop(Element &e1, Element &e2);
+    static bool compareLeft(Element &e1, Element &e2);
     std::string getView();
     std::string toString();
 };

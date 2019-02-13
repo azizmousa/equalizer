@@ -44,12 +44,35 @@ int main(int argc, char const *argv[])
 	
 	//std::sort(elmentsVec.begin(), elmentsVec.end());
 
+	// for(int i =0; i<elmentsVec.size();++i){
+	// 	std::cout << elmentsVec[i].getView() << std::endl;
+	// 	std::cout << elmentsVec[i].getLeft() << std::endl;
+	// 	std::cout << elmentsVec[i].getTop() << std::endl;
+	// 	std::cout << elmentsVec[i].getWidth() << std::endl;
+	// 	std::cout << elmentsVec[i].getHeight() << std::endl;
+	// }
+
+	std::vector<std::vector<Element>> matrix;
+
 	for(int i =0; i<elmentsVec.size();++i){
-		std::cout << elmentsVec[i].getView() << std::endl;
-		std::cout << elmentsVec[i].getLeft() << std::endl;
-		std::cout << elmentsVec[i].getTop() << std::endl;
-		std::cout << elmentsVec[i].getWidth() << std::endl;
-		std::cout << elmentsVec[i].getHeight() << std::endl;
+		std::sort(elmentsVec.begin(), elmentsVec.end(), Element::compareTop);
+		std::vector<Element> row;
+		int initTopVal = elmentsVec[0].getTop();
+		int j;
+		for(j =0; ( elmentsVec[j].getTop() - initTopVal <= 5) && j < elmentsVec.size();++j){
+			row.push_back(elmentsVec[j]);
+		}
+		elmentsVec.erase(elmentsVec.begin(), elmentsVec.begin()+j);
+		std::sort(row.begin(), row.end(), Element::compareLeft);
+		matrix.push_back(row);
+		i = 0;
+	}
+	
+	for(int i =0; i<matrix.size();++i){	
+		for(int j =0; j<matrix[i].size();++j){
+			std::cout << matrix[i][j].getView() << " ";
+		}
+		std::cout<<std::endl;
 	}
 
 	return 0;

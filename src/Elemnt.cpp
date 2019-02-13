@@ -54,6 +54,13 @@ int Element::getHeight(){
     return this->heightRatio;
 }
 
+bool Element::compareTop(Element &e1, Element &e2){
+    return e1.getTop() < e2.getTop();
+}
+
+bool Element::compareLeft(Element &e1, Element &e2){
+    return e1.getLeft() < e2.getLeft();
+}
 std::string Element::getView(){
     return this->view;
 }
