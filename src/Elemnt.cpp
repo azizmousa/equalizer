@@ -1,7 +1,8 @@
-#include <equalizer/Element.hpp>
 
 #include<string>
+#include<vector>
 
+#include <equalizer/Element.hpp>
 
 Element::Element(){
     this->leftRatio = 0;
@@ -69,4 +70,13 @@ std::string Element::toString(){
     return this->view + "\nleft: " + std::to_string(this->leftRatio) + "\ntop: "
             + std::to_string(this->topRatio) + "\nright: " + std::to_string(this->widthRatio) 
             + "\nbottom: " + std::to_string(this->heightRatio);
+}
+
+
+void Element::setDirections(Directions direcitons){
+    this->directions = direcitons;
+}
+
+Directions Element::getDirections(){
+    return this->directions;
 }
