@@ -30,6 +30,7 @@ public:
     static bool compareLeft(Element &e1, Element &e2);
 
     Directions getDirections();
+    std::vector<std::string> getExistsDirections();
 
     std::string getView();
     std::string toString();

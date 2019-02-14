@@ -80,3 +80,28 @@ void Element::setDirections(Directions direcitons){
 Directions Element::getDirections(){
     return this->directions;
 }
+
+std::vector<std::string> Element::getExistsDirections(){
+    std::vector<std::string> dirs;
+    if(this->directions.getConstraintStart_toStartOf() != "")
+        dirs.push_back(this->directions.getConstraintStart_toStartOf());
+    if(this->directions.getConstraintStart_toEndOf() != "")
+        dirs.push_back(this->directions.getConstraintStart_toEndOf());
+
+    if(this->directions.getConstraintTop_toTopOf() != "")
+        dirs.push_back(this->directions.getConstraintTop_toTopOf());
+    if(this->directions.getConstraintTop_toTopOf() != "")
+        dirs.push_back(this->directions.getConstraintTop_toTopOf());
+
+    if(this->directions.getConstraintEnd_toStartOf() != "")
+        dirs.push_back(this->directions.getConstraintEnd_toStartOf());
+    if(this->directions.getConstraintEnd_toEndOf() != "")
+        dirs.push_back(this->directions.getConstraintEnd_toEndOf());
+
+    if(this->directions.getConstraintBottom_toTopOf() != "")
+        dirs.push_back(this->directions.getConstraintBottom_toTopOf());
+    if(this->directions.getConstraintBottom_toBottomOf() != "")
+        dirs.push_back(this->directions.getConstraintBottom_toBottomOf());
+
+    return dirs;
+}
