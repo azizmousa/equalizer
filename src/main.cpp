@@ -54,11 +54,11 @@ int main(int argc, char const *argv[])
 
 	std::vector<std::vector<Element>> matrix;
 
-	for(int i =0; i<elmentsVec.size();++i){
+	for(size_t i =0; i<elmentsVec.size();++i){
 		std::sort(elmentsVec.begin(), elmentsVec.end(), Element::compareTop);
 		std::vector<Element> row;
 		int initTopVal = elmentsVec[0].getTop();
-		int j;
+		size_t j;
 		for(j =0; ( elmentsVec[j].getTop() - initTopVal <= 5) && j < elmentsVec.size();++j){
 			row.push_back(elmentsVec[j]);
 		}
@@ -68,8 +68,8 @@ int main(int argc, char const *argv[])
 		i = 0;
 	}
 	
-	for(int i =0; i<matrix.size();++i){	
-		for(int j =0; j<matrix[i].size();++j){
+	for(size_t i =0; i<matrix.size();++i){	
+		for(size_t j =0; j<matrix[i].size();++j){
 			std::cout << matrix[i][j].getView() << " ";
 		}
 		std::cout<<std::endl;
