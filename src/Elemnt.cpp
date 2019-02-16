@@ -84,24 +84,24 @@ Directions Element::getDirections(){
 std::vector<std::string> Element::getExistsDirections(){
     std::vector<std::string> dirs;
     if(this->directions.getConstraintStart_toStartOf() != "")
-        dirs.push_back(this->directions.getConstraintStart_toStartOf());
+        dirs.push_back("ConstraintStart_toStartOf = " + this->directions.getConstraintStart_toStartOf());
     if(this->directions.getConstraintStart_toEndOf() != "")
-        dirs.push_back(this->directions.getConstraintStart_toEndOf());
+        dirs.push_back("ConstraintStart_toEndOf = "+this->directions.getConstraintStart_toEndOf());
 
     if(this->directions.getConstraintTop_toTopOf() != "")
-        dirs.push_back(this->directions.getConstraintTop_toTopOf());
-    if(this->directions.getConstraintTop_toTopOf() != "")
-        dirs.push_back(this->directions.getConstraintTop_toTopOf());
+        dirs.push_back("ConstraintTop_toTopOf = " + this->directions.getConstraintTop_toTopOf());
+    if(this->directions.getConstraintTop_toBottomOf() != "")
+        dirs.push_back("ConstraintTop_toBottomOf = " + this->directions.getConstraintTop_toBottomOf());
 
     if(this->directions.getConstraintEnd_toStartOf() != "")
-        dirs.push_back(this->directions.getConstraintEnd_toStartOf());
+        dirs.push_back("ConstraintEnd_toStartOf = " + this->directions.getConstraintEnd_toStartOf());
     if(this->directions.getConstraintEnd_toEndOf() != "")
-        dirs.push_back(this->directions.getConstraintEnd_toEndOf());
+        dirs.push_back("ConstraintEnd_toEndOf = " + this->directions.getConstraintEnd_toEndOf());
 
     if(this->directions.getConstraintBottom_toTopOf() != "")
-        dirs.push_back(this->directions.getConstraintBottom_toTopOf());
+        dirs.push_back("ConstraintBottom_toTopOf = " + this->directions.getConstraintBottom_toTopOf());
     if(this->directions.getConstraintBottom_toBottomOf() != "")
-        dirs.push_back(this->directions.getConstraintBottom_toBottomOf());
+        dirs.push_back("ConstraintBottom_toBottomOf = " + this->directions.getConstraintBottom_toBottomOf());
 
     return dirs;
 }
