@@ -11,8 +11,9 @@ Element::Element(){
     this->bottomRatio = 0;
 }
 
-Element::Element(std::string view, int left, int top, int right, int bottom){
+Element::Element(std::string view, std::string id,int left, int top, int right, int bottom){
     this->view = view;
+    this->id = id;
     this->leftRatio = left;
     this->topRatio = top;
     this->rightRatio = right;
@@ -25,6 +26,10 @@ void Element::setLeft(int left){
 
 void Element::setView(std::string view){
     this->view = view;
+}
+
+void Element::setId(std::string id){
+    this->id = id;
 }
 
 void Element::setTop(int top){
@@ -57,6 +62,10 @@ int Element::getBottom(){
 
 std::string Element::getView(){
     return this->view;
+}
+
+std::string Element::getId(){
+    return this->id;
 }
 
 std::string Element::toString(){

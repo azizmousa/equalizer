@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
 	input >> width;
 	input >> height;
 
-	std::string view, temp;
+	std::string view, id, temp;
 	int left, top, right, bottom;
 
 	while(!input.eof()){
@@ -32,13 +32,13 @@ int main(int argc, char const *argv[])
 		
 		if(input.peek() == EOF)
 			break;
-
+		input >> id;
 		input >> left;
 		input >> top;
 		input >> right;
 		input >> bottom;
 		input >> temp;
-		Element e(view, getPercent(left, width), getPercent(top, height), 
+		Element e(view, id,getPercent(left, width), getPercent(top, height), 
 		getPercent(right, width), getPercent(bottom, height));
 
 		//std::cout<<e.toString()<<std::endl<<std::endl;
@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
 	std::vector<View> views;
 
 	for(size_t i =0; i<elmentsVec.size();++i){
-		View v(elmentsVec[i].getView(), elmentsVec[i].getView(), 
+		View v(elmentsVec[i].getView(), elmentsVec[i].getId(), 
 		elmentsVec[i].getLeft(), elmentsVec[i].getTop(), elmentsVec[i].getRight(),
 		 elmentsVec[i].getBottom());
 		 views.push_back(v);
