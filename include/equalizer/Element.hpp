@@ -6,29 +6,23 @@
 
 class Element{
 private:
-    int leftRatio, topRatio, widthRatio, heightRatio;
+    int leftRatio, topRatio, startRatio, endRatio;
     std::string view;
     
 public:
     Element();
-    Element(std::string view, int leftRatio, int topRatio, int widthRatio, int heightRatio);
+    Element(std::string view, int leftRatio, int topRatio, int startRatio, int endRatio);
     void setLeft(int left);
     void setTop(int top);
-    void setWidth(int width);
-    void setHeight(int height);
+    void setStart(int start);
+    void setEnd(int end);
     void setView(std::string view);
     
 
     int getLeft();
     int getTop();
-    int getWidth();
-    int getHeight();
-
-    static bool compareTop(Element &e1, Element &e2);
-    static bool compareLeft(Element &e1, Element &e2);
-
-    
-    std::vector<std::string> getExistsDirections();
+    int getStart();
+    int getEnd();
 
     std::string getView();
     std::string toString();
