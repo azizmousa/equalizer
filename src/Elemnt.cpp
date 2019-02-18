@@ -8,7 +8,7 @@ Element::Element(){
     this->leftRatio = 0;
     this->topRatio = 0;
     this->rightRatio = 0;
-    this->endRatio = 0;
+    this->bottomRatio = 0;
 }
 
 Element::Element(std::string view, int left, int top, int right, int bottom){
@@ -16,7 +16,7 @@ Element::Element(std::string view, int left, int top, int right, int bottom){
     this->leftRatio = left;
     this->topRatio = top;
     this->rightRatio = right;
-    this->endRatio = bottom;
+    this->bottomRatio = bottom;
 }
 
 void Element::setLeft(int left){
@@ -35,8 +35,8 @@ void Element::setRight(int rightRatio){
     this->rightRatio = rightRatio;
 }
 
-void Element::setEnd(int endRatio){
-    this->endRatio = endRatio;
+void Element::setBottom(int bottomRatio){
+    this->bottomRatio = bottomRatio;
 }
 
 int Element::getLeft(){
@@ -51,8 +51,8 @@ int Element::getRight(){
     return this->rightRatio;
 }
 
-int Element::getEnd(){
-    return this->endRatio;
+int Element::getBottom(){
+    return this->bottomRatio;
 }
 
 std::string Element::getView(){
@@ -62,5 +62,5 @@ std::string Element::getView(){
 std::string Element::toString(){
     return this->view + "\nleft: " + std::to_string(this->leftRatio) + "\ntop: "
             + std::to_string(this->topRatio) + "\nright: " + std::to_string(this->rightRatio) 
-            + "\nbottom: " + std::to_string(this->endRatio);
+            + "\nbottom: " + std::to_string(this->bottomRatio);
 }
