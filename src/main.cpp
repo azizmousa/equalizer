@@ -3,6 +3,8 @@
 #include<fstream>
 #include<vector>
 #include<algorithm>
+#include<boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 #include<equalizer/Element.hpp>
 
@@ -36,21 +38,10 @@ int main(int argc, char const *argv[])
 		Element e(view, getPercent(left, width), getPercent(top, height), 
 		getPercent(right - left, width), getPercent(bottom - top, height));
 
-		std::cout<<e.toString()<<std::endl<<std::endl;
+		//std::cout<<e.toString()<<std::endl<<std::endl;
 		elmentsVec.push_back(e);
 	}
 	input.close();
-	
-
-	//std::sort(elmentsVec.begin(), elmentsVec.end());
-
-	// for(int i =0; i<elmentsVec.size();++i){
-	// 	std::cout << elmentsVec[i].getView() << std::endl;
-	// 	std::cout << elmentsVec[i].getLeft() << std::endl;
-	// 	std::cout << elmentsVec[i].getTop() << std::endl;
-	// 	std::cout << elmentsVec[i].getWidth() << std::endl;
-	// 	std::cout << elmentsVec[i].getHeight() << std::endl;
-	// }
 
 	std::vector<std::vector<Element>> matrix;
 
@@ -70,9 +61,43 @@ int main(int argc, char const *argv[])
 	
 	for(size_t i =0; i<matrix.size();++i){	
 		for(size_t j =0; j<matrix[i].size();++j){
-			std::cout << matrix[i][j].getView() << " ";
+			Directions dirs;
+			int previous = 0, next = 0, up = 0, down = 0;
+			if(j != 0)
+				previous = matrix[i][j - 1].getLeft() + matrix[i][j - 1].getWidth();
+			
+			if(j != matrix[i].size() - 1)
+				next = matrix[i][j + 1].getLeft();
+			
+			int prevDif = std::abs(previous - matrix[i][j].getLeft());
+			int nexDif = std::abs(next - (matrix[i][j].getLeft() + matrix[i][j].getWidth()));
+			
+			if(prevDif > nexDif){
+				if(j != matrix[i].size() - 1)
+					dirs.setConstraintEnd_toStartOf(matrix[i][j + 1].getView());
+				else
+					dirs.setConstraintEnd_toEndOf("parent");
+			}else{
+				if(j != 0)
+					dirs.setConstraintEnd_toStartOf(matrix[i][j - 1].getView());
+				else
+					dirs.setConstraintStart_toStartOf("parent");
+			}
+				
+
+			matrix[i][j].setDirections(dirs);
 		}
-		std::cout<<std::endl;
+	}
+
+	for(size_t i =0; i<matrix.size();++i){	
+		for(size_t j =0; j<matrix[i].size();++j){
+			std::vector<std::string> vec = matrix[i][j].getExistsDirections();
+			std::cout << matrix[i][j].getView() << ": " << std::endl;
+			for(size_t k =0; k<vec.size();++k){
+				std::cout << vec[k] << std::endl;
+			}
+			std::cout << std::endl;
+		}
 	}
 
 	return 0;
