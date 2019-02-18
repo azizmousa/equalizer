@@ -6,22 +6,22 @@
 
 class Element{
 private:
-    int leftRatio, topRatio, startRatio, endRatio;
+    int leftRatio, topRatio, rightRatio, endRatio;
     std::string view;
     
 public:
     Element();
-    Element(std::string view, int leftRatio, int topRatio, int startRatio, int endRatio);
+    Element(std::string view, int leftRatio, int topRatio, int rightRatio, int endRatio);
     void setLeft(int left);
     void setTop(int top);
-    void setStart(int start);
+    void setRight(int start);
     void setEnd(int end);
     void setView(std::string view);
     
 
     int getLeft();
     int getTop();
-    int getStart();
+    int getRight();
     int getEnd();
 
     std::string getView();
