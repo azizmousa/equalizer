@@ -4,13 +4,11 @@
 #include <string>
 #include<vector>
 
-#include <equalizer/Directions.hpp>
-
 class Element{
 private:
     int leftRatio, topRatio, widthRatio, heightRatio;
     std::string view;
-    Directions directions;
+    
 public:
     Element();
     Element(std::string view, int leftRatio, int topRatio, int widthRatio, int heightRatio);
@@ -19,7 +17,7 @@ public:
     void setWidth(int width);
     void setHeight(int height);
     void setView(std::string view);
-    void setDirections(Directions direcitons);
+    
 
     int getLeft();
     int getTop();
@@ -29,7 +27,7 @@ public:
     static bool compareTop(Element &e1, Element &e2);
     static bool compareLeft(Element &e1, Element &e2);
 
-    Directions getDirections();
+    
     std::vector<std::string> getExistsDirections();
 
     std::string getView();
