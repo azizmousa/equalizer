@@ -1,64 +1,42 @@
 
-#include<iostream>
-#include<fstream>
-#include<vector>
-#include<algorithm>
-#include<boost/property_tree/ptree.hpp>
-#include<boost/property_tree/json_parser.hpp>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
-#include<equalizer/Element.hpp>
-#include<equalizer/View.hpp>
+#include "equalizer/Element.hpp"
+#include "equalizer/View.hpp"
+#include "equalizer/Files.h"
+
+const std::string OUTPUT_DIR = "json";
+const int scaller = 5;
 
 int getPercent(int sub, int max);
 void wirteViews(std::vector<View> &views, std::string filename);
-std::string getFileName(std::string path);
+int round(int perc, int maxScal);
+void processViewFile(std::string file);
 
-std::string VIEWS_FILE;
 
 int main(int argc, char const *argv[])
 {
 	if(argc > 1){
+		Files::initializeOutputDires(OUTPUT_DIR);
 		for(int i =1; i<argc ; ++i){
 			std::string file = std::string(argv[i]);
-			VIEWS_FILE = getFileName(file) + ".json";
-			std::fstream input(file);
-			std::vector<Element> elmentsVec;
-			int width, height;
 			
-			input >> width;
-			input >> height;
-
-			std::string view, id, temp;
-			int left, top, right, bottom;
-
-			while(!input.eof()){
-				input >> view;
-				
-				if(input.peek() == EOF)
-					break;
-				input >> id;
-				input >> left;
-				input >> top;
-				input >> right;
-				input >> bottom;
-				input >> temp;
-				Element e(view, id,getPercent(left, width), getPercent(top, height), 
-				getPercent(right, width), getPercent(bottom, height));
-
-				//std::cout<<e.toString()<<std::endl<<std::endl;
-				elmentsVec.push_back(e);
+			if(Files::is_file(file.c_str())){
+				processViewFile(file);
+			}else{
+				std::vector<std::string> files;
+				Files::getDirFiles(file, ".viw", files);
+				for(size_t j=0; j< files.size();++j){
+					processViewFile(file + Files::slash() + files[j]);
+				}
 			}
-			input.close();
-			std::vector<View> views;
-
-			for(size_t i =0; i<elmentsVec.size();++i){
-				View v(elmentsVec[i].getView(), elmentsVec[i].getId(), 
-				elmentsVec[i].getLeft(), elmentsVec[i].getTop(), elmentsVec[i].getRight(),
-				elmentsVec[i].getBottom());
-				views.push_back(v);
-			}
-
-			wirteViews(views, VIEWS_FILE);
 
 		}
 	}
@@ -91,25 +69,54 @@ void wirteViews(std::vector<View> &views, std::string filename){
 	write_json(filename, viewsTree);
 }
 
-std::string getFileName(std::string path){
-    char slash = '/';
-    char dot = '.';
-#ifdef _WIN32
-    slash = '\\';
-#endif
-    int last;
-    last = path.find_last_of(slash);
-    std::string name;
-    if(last != std::string::npos){
-        name = path.substr(last+1);
-    }else{
-        name = path;
-    }
 
-    last = name.find_last_of(dot);
-    if(last != std::string::npos){
-        name = name.substr(0, last);
-    }
-    return name;
-    
+int round(int perc, int maxScal){
+	int rem = perc % maxScal;
+	perc -= rem;
+	return (rem > rem/2)? perc + maxScal : perc;
+}
+
+
+void processViewFile(std::string file){
+	std::string viewsFileName = Files::getFileName(file) + ".json";
+	std::cerr << "path: " << file <<std::endl;
+	std::fstream input(file);
+	std::vector<Element> elmentsVec;
+	int width, height;
+	
+	input >> width;
+	input >> height;
+
+	std::string view, id, temp;
+	int left, top, right, bottom;
+
+	while(!input.eof()){
+		input >> view;
+		
+		if(input.peek() == EOF)
+			break;
+		input >> id;
+		input >> left;
+		input >> top;
+		input >> right;
+		input >> bottom;
+		input >> temp;
+		Element e(view, id,round(getPercent(left, width), scaller), round(getPercent(top, height), scaller), 
+		round(getPercent(right, width), scaller), round(getPercent(bottom, height), scaller));
+		
+		//std::cout<<e.toString()<<std::endl<<std::endl;
+		elmentsVec.push_back(e);
+	}
+	input.close();
+
+	std::vector<View> views;
+			
+	for(size_t i =0; i<elmentsVec.size();++i){
+		View v(elmentsVec[i].getView(), elmentsVec[i].getId(), 
+		elmentsVec[i].getLeft(), elmentsVec[i].getTop(), elmentsVec[i].getRight(),
+		elmentsVec[i].getBottom());
+		views.push_back(v);
+	}
+
+	wirteViews(views, OUTPUT_DIR + Files::slash() + viewsFileName);
 }
