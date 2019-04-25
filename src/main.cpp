@@ -17,15 +17,17 @@
 
 const std::string OUTPUT_DIR = "json";
 const int scaller = 5;
+enum FLAGES{ANDROID = 1, HTML};
 
 int getPercent(int sub, int max);
 void wirteViews(std::vector<AndroidView> &views, std::string filename);
 int round(int perc, int maxScal);
-void readElementsFile(std::string file);
+int readElementsFile(std::string flag, std::string file);
+int createOutputFile(std::string flag, std::string outputPath, std::vector<Element> &elemnts);
 
-std::vector<Element> elmentsVec;
 
-enum FLAGES{ANDROID, HTML};
+
+
 std::map<std::string, int> FlagesParser = {
 	{"--android", FLAGES::ANDROID},
 	{"--html", FLAGES::HTML}
@@ -34,26 +36,35 @@ std::map<std::string, int> FlagesParser = {
 
 int main(int argc, char const *argv[])
 {
+
+	int exitResult = 1;
+
 	if(argc > 2){
+		if(!(FlagesParser[std::string(argv[1])] > 0)){
+			std::cout << argv[1] << " is not valid flage" << std::endl;
+			return exitResult;
+		}
 		Files::initializeOutputDires(OUTPUT_DIR);
-		for(int i =1; i<argc ; ++i){
+		for(int i =2; i<argc ; ++i){
 			std::string file = std::string(argv[i]);
 			
 			if(Files::is_file(file.c_str())){
-				readElementsFile(file);
+				exitResult = readElementsFile(std::string(argv[1]), file);
 			}else{
 				std::vector<std::string> files;
 				Files::getDirFiles(file, ".viw", files);
 				for(size_t j=0; j< files.size();++j){
-					readElementsFile(file + Files::slash() + files[j]);
+					exitResult = readElementsFile(std::string(argv[1]), file + Files::slash() + files[j]);
 				}
 			}
 
 		}
+	}else{
+		std::cout << "invalid number of arguments" <<std::endl;
 	}
 
 	
-	return 0;
+	return exitResult;	
 }
 
 
@@ -71,9 +82,10 @@ int round(int perc, int maxScal){
 }
 
 
-void readElementsFile(std::string file){
-	std::string viewsFileName = Files::getFileName(file) + ".json";
+int readElementsFile(std::string flag, std::string file){
+	std::string filename = Files::getFileName(file) + ".json";
 	std::cerr << "path: " << file <<std::endl;
+	std::vector<Element> elmentsVec;
 	std::fstream input(file);
 	int width, height;
 	
@@ -101,21 +113,24 @@ void readElementsFile(std::string file){
 		elmentsVec.push_back(e);
 	}
 	input.close();
+	return createOutputFile(flag, OUTPUT_DIR + Files::slash() + filename, elmentsVec);
 }
 
-void createOutputFile(FLAGES flag){
+int createOutputFile(std::string flag, std::string outputPath, std::vector<Element> &elemnts){
 	ObjectsTreeController* objectsTree;
-	switch (flag)
+	switch (FlagesParser[flag])
 	{
 	case FLAGES::ANDROID:
-			objectsTree = new AndroidViewsWriter(elmentsVec);
+			objectsTree = new AndroidViewsWriter(elemnts);
 		break;
 	
 	default:
-		return;
+		std::cout << flag << " flage not found!." << std::endl;
+		return 1;
 	}
 
 	objectsTree->createObjectsTree();
-	objectsTree->writeObjectsTree();
-
+	objectsTree->writeObjectsTree(outputPath);
+	delete objectsTree;
+	return 0;
 }
