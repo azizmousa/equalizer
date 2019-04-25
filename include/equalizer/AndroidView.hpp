@@ -3,7 +3,7 @@
 
 #include<string>
 
-class View{
+class AndroidView{
 
 private:
     std::string view;
@@ -21,8 +21,8 @@ public:
     const static std::string END_PERCENT_KEY;
     const static std::string BOTTOM_PERCENT_KEY;
 
-    View();
-    View(std::string, std::string, double, double, double, double);
+    AndroidView();
+    AndroidView(std::string, std::string, double, double, double, double);
 
     void setView(std::string view);
     void setId(std::string id);

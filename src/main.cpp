@@ -5,36 +5,47 @@
 #include <algorithm>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
+#include <map>
+#include <string>
 
 #include "equalizer/Element.hpp"
-#include "equalizer/View.hpp"
+#include "equalizer/AndroidView.hpp"
 #include "equalizer/Files.h"
+#include "equalizer/ObjectsTreeController.hpp"
+#include "equalizer/AndroidViewsWriter.hpp"
+
 
 const std::string OUTPUT_DIR = "json";
 const int scaller = 5;
 
 int getPercent(int sub, int max);
-void wirteViews(std::vector<View> &views, std::string filename);
+void wirteViews(std::vector<AndroidView> &views, std::string filename);
 int round(int perc, int maxScal);
-void processViewFile(std::string file);
+void readElementsFile(std::string file);
+
+std::vector<Element> elmentsVec;
+
+enum FLAGES{ANDROID, HTML};
+std::map<std::string, int> FlagesParser = {
+	{"--android", FLAGES::ANDROID},
+	{"--html", FLAGES::HTML}
+};
 
 
 int main(int argc, char const *argv[])
 {
-	if(argc > 1){
+	if(argc > 2){
 		Files::initializeOutputDires(OUTPUT_DIR);
 		for(int i =1; i<argc ; ++i){
 			std::string file = std::string(argv[i]);
 			
 			if(Files::is_file(file.c_str())){
-				processViewFile(file);
+				readElementsFile(file);
 			}else{
 				std::vector<std::string> files;
 				Files::getDirFiles(file, ".viw", files);
 				for(size_t j=0; j< files.size();++j){
-					processViewFile(file + Files::slash() + files[j]);
+					readElementsFile(file + Files::slash() + files[j]);
 				}
 			}
 
@@ -51,23 +62,6 @@ int getPercent(int sub, int max){
 	return (rat * 100);
 }
 
-void wirteViews(std::vector<View> &views, std::string filename){
-	using boost::property_tree::ptree;
-	ptree viewsTree;
-	ptree viewsArray;
-	for(size_t i =0; i<views.size();++i){
-		ptree child;
-		child.add<std::string>(View::VIEW_KEY, views[i].getView());
-		child.add<std::string>(View::ID_KEY, views[i].getId());
-		child.add<double>(View::Start_PERCENT_KEY, views[i].getStartPercent());
-		child.add<double>(View::TOP_PERCENT_KEY, views[i].getTopPercent());
-		child.add<double>(View::END_PERCENT_KEY, views[i].getEndPercent());
-		child.add<double>(View::BOTTOM_PERCENT_KEY, views[i].getBottomPercent());
-		viewsArray.push_back(std::make_pair("", child));
-	}
-	viewsTree.add_child("views", viewsArray);
-	write_json(filename, viewsTree);
-}
 
 
 int round(int perc, int maxScal){
@@ -77,11 +71,10 @@ int round(int perc, int maxScal){
 }
 
 
-void processViewFile(std::string file){
+void readElementsFile(std::string file){
 	std::string viewsFileName = Files::getFileName(file) + ".json";
 	std::cerr << "path: " << file <<std::endl;
 	std::fstream input(file);
-	std::vector<Element> elmentsVec;
 	int width, height;
 	
 	input >> width;
@@ -101,22 +94,28 @@ void processViewFile(std::string file){
 		input >> right;
 		input >> bottom;
 		input >> temp;
-		Element e(view, id,round(getPercent(left, width), scaller), round(getPercent(top, height), scaller), 
-		round(getPercent(right, width), scaller), round(getPercent(bottom, height), scaller));
+		Element e(view, id,getPercent(left, width), getPercent(top, height), 
+		getPercent(right, width), getPercent(bottom, height));
 		
 		//std::cout<<e.toString()<<std::endl<<std::endl;
 		elmentsVec.push_back(e);
 	}
 	input.close();
+}
 
-	std::vector<View> views;
-			
-	for(size_t i =0; i<elmentsVec.size();++i){
-		View v(elmentsVec[i].getView(), elmentsVec[i].getId(), 
-		elmentsVec[i].getLeft(), elmentsVec[i].getTop(), elmentsVec[i].getRight(),
-		elmentsVec[i].getBottom());
-		views.push_back(v);
+void createOutputFile(FLAGES flag){
+	ObjectsTreeController* objectsTree;
+	switch (flag)
+	{
+	case FLAGES::ANDROID:
+			objectsTree = new AndroidViewsWriter(elmentsVec);
+		break;
+	
+	default:
+		return;
 	}
 
-	wirteViews(views, OUTPUT_DIR + Files::slash() + viewsFileName);
+	objectsTree->createObjectsTree();
+	objectsTree->writeObjectsTree();
+
 }
