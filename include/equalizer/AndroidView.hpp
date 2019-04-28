@@ -1,5 +1,5 @@
-#ifndef _VIEW_
-#define _VIEW_
+#ifndef ANDROID_VIEW_
+#define ANDROID_VIEW_
 
 #include<string>
 
