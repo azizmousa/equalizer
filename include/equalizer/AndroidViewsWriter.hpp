@@ -13,7 +13,6 @@ private:
 public:
     AndroidViewsWriter(std::vector<Element> elements);
     void createObjectsTree();
-    void writeObjectsTree(std::string path);
     ~AndroidViewsWriter();
 };
 
