@@ -6,9 +6,16 @@
 #include "equalizer/AndroidViewsWriter.hpp"
 #include "equalizer/Element.hpp"
 
-AndroidViewsWriter::AndroidViewsWriter(std::vector<Element> elements)
+int getPercent(int sub, int max);
+
+AndroidViewsWriter::AndroidViewsWriter(std::vector<Element> elements, int width, int height)
 :ObjectsTreeController(elements){
-    
+	for(size_t i =0; i<elements.size(); ++i){
+		elements[i].setLeft(getPercent(elements[i].getLeft(), width));
+		elements[i].setTop(getPercent(elements[i].getTop(), height));
+		elements[i].setRight(getPercent(elements[i].getRight(), width));
+		elements[i].setBottom(getPercent(elements[i].getBottom(), height));
+	}
 }
 
 AndroidViewsWriter::~AndroidViewsWriter(){}
@@ -38,4 +45,9 @@ void AndroidViewsWriter::createObjectsTree(){
 	}
 	
 	ObjectsTreeController::objectsTree.add_child("views", viewsArray);
+}
+
+int getPercent(int sub, int max){
+	double rat = sub / (double) max;
+	return (rat * 100);
 }

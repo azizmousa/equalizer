@@ -11,7 +11,7 @@ class AndroidViewsWriter: public ObjectsTreeController{
 private:
     std::vector<AndroidView> androidViews;
 public:
-    AndroidViewsWriter(std::vector<Element> elements);
+    AndroidViewsWriter(std::vector<Element> elements, int width, int height);
     void createObjectsTree();
     ~AndroidViewsWriter();
 };

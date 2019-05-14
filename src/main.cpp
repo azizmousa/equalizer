@@ -20,7 +20,7 @@ const std::string OUTPUT_DIR = "json";
 const int scaller = 5;
 enum FLAGES{ANDROID = 1, HTML};
 
-int getPercent(int sub, int max);
+
 void wirteViews(std::vector<AndroidView> &views, std::string filename);
 int round(int perc, int maxScal);
 int readElementsFile(std::string flag, std::string file);
@@ -69,12 +69,6 @@ int main(int argc, char const *argv[])
 }
 
 
-int getPercent(int sub, int max){
-	double rat = sub / (double) max;
-	return (rat * 100);
-}
-
-
 int readElementsFile(std::string flag, std::string file){
 	std::string filename = Files::getFileName(file) + ".json";
 	std::cout << "Processing file: " << file <<std::endl;
@@ -111,7 +105,7 @@ int createOutputFile(std::string flag, std::string outputPath, std::vector<Eleme
 	switch (FlagesParser[flag])
 	{
 	case FLAGES::ANDROID:
-			objectsTree = new AndroidViewsWriter(elemnts);
+			objectsTree = new AndroidViewsWriter(elemnts, w, h);
 		break;
 	case FLAGES::HTML:
 		objectsTree = new HtmlWriter(elemnts, w, h);
