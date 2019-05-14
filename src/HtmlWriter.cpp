@@ -5,7 +5,7 @@
 
 #include "equalizer/HtmlWriter.hpp"
 #include "equalizer/Element.hpp"
-
+#include "equalizer/Utilities.hpp"
 
 int round(int val);
 bool compareTop(HtmlElement &e1, HtmlElement &e2);
@@ -14,15 +14,20 @@ HtmlWriter::HtmlWriter(std::vector<Element> elements, int maxWidth, int maxHeigh
 :ObjectsTreeController(elements){
     this->maxHeight = maxHeight;
     this->maxWidth = maxWidth;
+    for(size_t i =0; i < ObjectsTreeController::elements.size();++i){
+        ObjectsTreeController::elements[i].setLeft(getPercent(elements[i].getLeft(), maxWidth));
+        ObjectsTreeController::elements[i].setTop(getPercent(elements[i].getTop(), maxHeight));
+        ObjectsTreeController::elements[i].setRight(getPercent(elements[i].getRight(), maxWidth));
+        ObjectsTreeController::elements[i].setBottom(getPercent(elements[i].getBottom(), maxHeight));
+    }
 }
 
 HtmlWriter::~HtmlWriter(){}
 
 void HtmlWriter::createObjectsTree(){
 	// std::cout << "elments size: " << ObjectsTreeController::elements.size() << std::endl;
-    for(size_t i =0; i < ObjectsTreeController::elements.size();++i){
-        
-		HtmlElement e(ObjectsTreeController::elements[i].getView(), 
+    for(size_t i =0; i < ObjectsTreeController::elements.size();++i){	
+        HtmlElement e(ObjectsTreeController::elements[i].getView(), 
         ObjectsTreeController::elements[i].getId(), 
 		round(ObjectsTreeController::elements[i].getLeft()), 
         ObjectsTreeController::elements[i].getTop(), 
