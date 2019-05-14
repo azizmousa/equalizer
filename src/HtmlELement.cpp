@@ -3,12 +3,25 @@
 
 #include "equalizer/HtmlElement.hpp"
 
-const std::string HtmlElement::ELEMENT_KEY = "";
-const std::string HtmlElement::ID_KEY = "";
-const std::string HtmlElement::START_COLUMN_KEY = "";
-const std::string HtmlElement::TOP_KEY = "";
-const std::string HtmlElement::WIDTH_KEY = "";
-const std::string HtmlElement::HEIGHT_KEY = "";
+const std::string HtmlElement::ELEMENT_KEY = "element";
+const std::string HtmlElement::ID_KEY = "id";
+const std::string HtmlElement::START_COLUMN_KEY = "start_column";
+const std::string HtmlElement::TOP_KEY = "top";
+const std::string HtmlElement::WIDTH_KEY = "width";
+const std::string HtmlElement::HEIGHT_KEY = "height";
+
+
+HtmlElement::HtmlElement(){}
+HtmlElement::HtmlElement(std::string elementType, std::string id, int startColumn, int top, int width, int height){
+    this->element = elementType;
+    this->id = id;
+    this->start_column = startColumn;
+    this->top = top;
+    this->width = width;
+    this->height = height;
+}
+HtmlElement::~HtmlElement(){}
+    
 
 std::string HtmlElement::getElementType()const{return this->element;}
 std::string HtmlElement::getId()const{return this->id;}

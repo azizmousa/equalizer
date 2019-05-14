@@ -23,7 +23,8 @@ public:
 
     HtmlElement();
     HtmlElement(std::string, std::string, int, int, int, int);
-
+    ~HtmlElement();
+    
     void setElementType(std::string element);
     void setId(std::string id);
     void setStartColumn(int s);

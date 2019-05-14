@@ -13,6 +13,7 @@
 #include "equalizer/Files.h"
 #include "equalizer/ObjectsTreeController.hpp"
 #include "equalizer/AndroidViewsWriter.hpp"
+#include "equalizer/HtmlWriter.hpp"
 
 
 const std::string OUTPUT_DIR = "json";
@@ -23,7 +24,7 @@ int getPercent(int sub, int max);
 void wirteViews(std::vector<AndroidView> &views, std::string filename);
 int round(int perc, int maxScal);
 int readElementsFile(std::string flag, std::string file);
-int createOutputFile(std::string flag, std::string outputPath, std::vector<Element> &elemnts);
+int createOutputFile(std::string flag, std::string outputPath, std::vector<Element> &elemnts, int w, int h);
 
 
 
@@ -74,17 +75,9 @@ int getPercent(int sub, int max){
 }
 
 
-
-int round(int perc, int maxScal){
-	int rem = perc % maxScal;
-	perc -= rem;
-	return (rem > rem/2)? perc + maxScal : perc;
-}
-
-
 int readElementsFile(std::string flag, std::string file){
 	std::string filename = Files::getFileName(file) + ".json";
-	std::cerr << "path: " << file <<std::endl;
+	std::cout << "Processing file: " << file <<std::endl;
 	std::vector<Element> elmentsVec;
 	std::fstream input(file);
 	int width, height;
@@ -106,24 +99,23 @@ int readElementsFile(std::string flag, std::string file){
 		input >> right;
 		input >> bottom;
 		input >> temp;
-		Element e(view, id,getPercent(left, width), getPercent(top, height), 
-		getPercent(right, width), getPercent(bottom, height));
-		
-		//std::cout<<e.toString()<<std::endl<<std::endl;
+		Element e(view, id,left, top, right, bottom);
 		elmentsVec.push_back(e);
 	}
 	input.close();
-	return createOutputFile(flag, OUTPUT_DIR + Files::slash() + filename, elmentsVec);
+	return createOutputFile(flag, OUTPUT_DIR + Files::slash() + filename, elmentsVec, width, height);
 }
 
-int createOutputFile(std::string flag, std::string outputPath, std::vector<Element> &elemnts){
+int createOutputFile(std::string flag, std::string outputPath, std::vector<Element> &elemnts, int w, int h){
 	ObjectsTreeController* objectsTree;
 	switch (FlagesParser[flag])
 	{
 	case FLAGES::ANDROID:
 			objectsTree = new AndroidViewsWriter(elemnts);
 		break;
-	
+	case FLAGES::HTML:
+		objectsTree = new HtmlWriter(elemnts, w, h);
+		break;
 	default:
 		std::cout << flag << " flage not found!." << std::endl;
 		return 1;
