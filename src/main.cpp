@@ -14,11 +14,11 @@
 #include "equalizer/ObjectsTreeController.hpp"
 #include "equalizer/AndroidViewsWriter.hpp"
 #include "equalizer/HtmlWriter.hpp"
-
+#include "equalizer/CSharpWriter.hpp"
 
 const std::string OUTPUT_DIR = "json";
 const int scaller = 5;
-enum FLAGES{ANDROID = 1, HTML};
+enum FLAGES{ANDROID = 1, HTML, CSHARP};
 
 
 void wirteViews(std::vector<AndroidView> &views, std::string filename);
@@ -31,7 +31,8 @@ int createOutputFile(std::string flag, std::string outputPath, std::vector<Eleme
 
 std::map<std::string, int> FlagesParser = {
 	{"--android", FLAGES::ANDROID},
-	{"--html", FLAGES::HTML}
+	{"--html", FLAGES::HTML},
+	{"--csharp", FLAGES::CSHARP}
 };
 
 
@@ -109,6 +110,9 @@ int createOutputFile(std::string flag, std::string outputPath, std::vector<Eleme
 		break;
 	case FLAGES::HTML:
 		objectsTree = new HtmlWriter(elemnts, w, h);
+		break;
+	case FLAGES::CSHARP:
+		objectsTree = new CSharpWriter(elemnts, w, h);
 		break;
 	default:
 		std::cout << flag << " flage not found!." << std::endl;
