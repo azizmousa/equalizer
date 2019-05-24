@@ -6,20 +6,20 @@
 
 const std::string CSharpObject::OBJECT_KEY = "object";
 const std::string CSharpObject::ID_KEY = "id";
-const std::string CSharpObject::Start_KEY = "start";
+const std::string CSharpObject::LEFT_KEY = "left";
 const std::string CSharpObject::TOP_KEY = "top";
-const std::string CSharpObject::END_KEY = "end";
-const std::string CSharpObject::BOTTOM_KEY = "bottom";
+const std::string CSharpObject::WIDTH_KEY = "width";
+const std::string CSharpObject::HEIGHT_KEY = "height";
 
 
 CSharpObject::CSharpObject(){}
-CSharpObject::CSharpObject(std::string object, std::string id, double start, double top, double end, double bottom){
+CSharpObject::CSharpObject(std::string object, std::string id, double left, double top, double width, double height){
     this->object = object;
     this->id = id;
-    this->start = start;
+    this->left = left;
     this->top = top;
-    this->end = end;
-    this->bottom = bottom;
+    this->width = width;
+    this->height = height;
 }
 
 void CSharpObject::setObject(std::string object){
@@ -28,17 +28,17 @@ void CSharpObject::setObject(std::string object){
 void CSharpObject::setId(std::string id){
     this->id = id;
 }
-void CSharpObject::setStart(double start){
-    this->start = start;
+void CSharpObject::setLeft(double left){
+    this->left = left;
 }
 void CSharpObject::setTop(double top){
     this->top = top;
 }
-void CSharpObject::setEnd(double end){
-    this->end = end;
+void CSharpObject::setWidth(double width){
+    this->width = width;
 }
-void CSharpObject::setBottom(double bottom){
-    this->bottom = bottom;
+void CSharpObject::setHeight(double height){
+    this->height = height;
 }
 
 std::string CSharpObject::getObject()const{
@@ -47,15 +47,15 @@ std::string CSharpObject::getObject()const{
 std::string CSharpObject::getId()const{
     return this->id;
 }
-double CSharpObject::getStart()const{
-    return this->start;
+double CSharpObject::getLeft()const{
+    return this->left;
 }
 double CSharpObject::getTop()const{
     return this->top;
 }
-double CSharpObject::getEnd()const{
-    return this->end;
+double CSharpObject::getWidth()const{
+    return this->width;
 }
-double CSharpObject::getBottom()const{
-    return this->bottom;
+double CSharpObject::getHeight()const{
+    return this->height;
 }

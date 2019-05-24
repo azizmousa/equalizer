@@ -22,8 +22,8 @@ void CSharpWriter::createObjectsTree(){
         ObjectsTreeController::elements[i].getId(), 
 		ObjectsTreeController::elements[i].getLeft(), 
         ObjectsTreeController::elements[i].getTop(), 
-        ObjectsTreeController::elements[i].getRight(),
-		ObjectsTreeController::elements[i].getBottom());
+        ObjectsTreeController::elements[i].getRight() - ObjectsTreeController::elements[i].getLeft(),
+		ObjectsTreeController::elements[i].getBottom() - ObjectsTreeController::elements[i].getTop());
 		this->csharpObject.push_back(v);
 	}
 	// std::cout << "android views size: " << androidViews.size() << std::endl;
@@ -32,10 +32,10 @@ void CSharpWriter::createObjectsTree(){
 		boost::property_tree::ptree child;
 		child.add<std::string>(CSharpObject::OBJECT_KEY, this->csharpObject[i].getObject());
 		child.add<std::string>(CSharpObject::ID_KEY, this->csharpObject[i].getId());
-		child.add<double>(CSharpObject::Start_KEY, this->csharpObject[i].getStart());
+		child.add<double>(CSharpObject::LEFT_KEY, this->csharpObject[i].getLeft());
 		child.add<double>(CSharpObject::TOP_KEY, this->csharpObject[i].getTop());
-		child.add<double>(CSharpObject::END_KEY, this->csharpObject[i].getEnd());
-		child.add<double>(CSharpObject::BOTTOM_KEY, this->csharpObject[i].getBottom());
+		child.add<double>(CSharpObject::WIDTH_KEY, this->csharpObject[i].getWidth());
+		child.add<double>(CSharpObject::HEIGHT_KEY, this->csharpObject[i].getHeight());
 		viewsArray.push_back(std::make_pair("", child));
 	}
 	ObjectsTreeController::objectsTree.put("width", this->width);
