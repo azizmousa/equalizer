@@ -38,7 +38,8 @@ std::map<std::string, int> FlagesParser = {
 
 int main(int argc, char const *argv[])
 {
-
+	std::cout << "start equalizing:" << std::endl;
+	std::cout << "--------------------" << std::endl;
 	int exitResult = 1;
 
 	if(argc > 2){
@@ -65,7 +66,8 @@ int main(int argc, char const *argv[])
 		std::cout << "invalid number of arguments" <<std::endl;
 	}
 
-	
+	std::cout << "end equalizing:" << std::endl;
+	std::cout << "--------------------" << std::endl;
 	return exitResult;	
 }
 

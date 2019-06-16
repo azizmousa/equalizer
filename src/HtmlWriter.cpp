@@ -7,8 +7,9 @@
 #include "equalizer/Element.hpp"
 #include "equalizer/Utilities.hpp"
 
-int round(int val);
+int round(double val, double maxVal);
 bool compareTop(HtmlElement &e1, HtmlElement &e2);
+bool compareLeft(HtmlElement &e1, HtmlElement &e2);
 
 HtmlWriter::HtmlWriter(std::vector<Element> elements, int maxWidth, int maxHeight)
 :ObjectsTreeController(elements){
@@ -26,12 +27,13 @@ HtmlWriter::~HtmlWriter(){}
 
 void HtmlWriter::createObjectsTree(){
 	// std::cout << "elments size: " << ObjectsTreeController::elements.size() << std::endl;
-    for(size_t i =0; i < ObjectsTreeController::elements.size();++i){	
+    
+    for(size_t i =0; i < ObjectsTreeController::elements.size();++i){
         HtmlElement e(ObjectsTreeController::elements[i].getView(), 
         ObjectsTreeController::elements[i].getId(), 
-		round(ObjectsTreeController::elements[i].getLeft()), 
+		ObjectsTreeController::elements[i].getLeft(), 
         ObjectsTreeController::elements[i].getTop(), 
-        round(ObjectsTreeController::elements[i].getRight() - ObjectsTreeController::elements[i].getLeft()),
+        ObjectsTreeController::elements[i].getRight() - ObjectsTreeController::elements[i].getLeft(),
 		ObjectsTreeController::elements[i].getBottom() - ObjectsTreeController::elements[i].getTop());
 		this->htmlElements.push_back(e);
 	}
@@ -61,25 +63,33 @@ void HtmlWriter::createObjectsTree(){
 
 
 void HtmlWriter::createElementsMatrix(){
-    for(size_t i =0; i<this->htmlElements.size();++i){
+    for(size_t i =0; i<=this->htmlElements.size();++i){
 		std::sort(this->htmlElements.begin(), this->htmlElements.end(), compareTop);
 		std::vector<HtmlElement> row;
 		int initTopVal = this->htmlElements[0].getTop();
 		size_t j;
+        
 		for(j =0; ( this->htmlElements[j].getTop() - initTopVal <= 10) && j < this->htmlElements.size();++j){
 			row.push_back(this->htmlElements[j]);
+            std::cout << htmlElements[j].getId() << std::endl;
 		}
+        std::sort(row.begin(), row.end(), compareLeft);
+        this->elmentsMatrix.push_back(row);
 		this->htmlElements.erase(this->htmlElements.begin(), this->htmlElements.begin()+j);
-		this->elmentsMatrix.push_back(row);
 		i = 0;
 	}
 
 }
 
-int round(int val){
-	return (val* 12)/100;
+int round(double val, double maxVal){
+	return (val/maxVal) * 100;
 }
 
 bool compareTop(HtmlElement &e1, HtmlElement &e2){
     return e1.getTop() < e2.getTop();
+}
+
+
+bool compareLeft(HtmlElement &e1, HtmlElement &e2){
+    return e1.getStartColumn() < e2.getStartColumn();
 }
