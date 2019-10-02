@@ -1,4 +1,4 @@
-# Sketch Builder (compiler part)
+# Sketch Builder (equalizer part)
 
 sketch builder is an application that use AI and computer Vision technologies to convert design sketch to real code in multiple programming languages, the equalizer part is the part which is responsible for read the viw files and convert it to json file depending on chosen language.
 
