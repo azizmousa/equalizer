@@ -62,3 +62,7 @@ $ ./equalizer --android /home/Downloads/test.viw
 
 ## After running this command:
 - you will find json dir include readable file called test.json containe the detected objects inforamtion as a json format
+
+
+## Main Project:
+- [Sketch builder] (https://github.com/zezomousa101/Sketch-Builder)
